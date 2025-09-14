@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <title>Lihat Ucapan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-white to-blue-50 min-h-screen p-6">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="text-3xl font-bold text-blue-600 text-center mb-6">Daftar Ucapan 💬</h2>
+    <div id="daftarUcapan" class="grid gap-4"></div>
+  </div>
+  <script>
+    async function loadUcapan() {
+      const res = await fetch("get_messages.php");
+      const data = await res.json();
+      const container = document.getElementById("daftarUcapan");
+      container.innerHTML = "";
+      data.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition";
+        card.innerHTML = `
+          <h3 class="font-bold text-lg text-blue-600">${item.judul}</h3>
+          <p class="text-gray-700">${item.pesan}</p>
+          <p class="text-sm text-gray-500 mt-2">Dari: ${item.nama} • ${item.created}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+    loadUcapan();
+  </script>
+</body>
+</html>
